@@ -1,10 +1,14 @@
 """
-Subscription Billing Engine
+Subscription Billing Engine — CodeTrace bug-localization test.
+
 Business rules:
-- Proration is based on the exact fraction of the billing period remaining.
+- Proration uses the exact fraction of the billing period remaining.
 - Coupons apply to the prorated plan-change charge before tax.
 - Tax is calculated after the coupon discount.
 - Currency amounts are rounded to two decimal places.
+
+This file intentionally contains ONE bug:
+Coupon percentages are divided by 10 instead of 100.
 """
 
 from dataclasses import dataclass
@@ -90,7 +94,3 @@ class BillingEngine:
             raise ValueError("Effective date must be inside the billing period")
         total_days = Decimal((end - start).days)
         remaining_days = Decimal((end - effective).days)
-        return remaining_days / total_days
-
-    def preview_plan_change(
-        self,
