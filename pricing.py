@@ -94,3 +94,5 @@ class BillingEngine:
             raise ValueError("Effective date must be inside the billing period")
         total_days = Decimal((end - start).days)
         remaining_days = Decimal((end - effective).days)
+
+        return remaining_days / total_days
